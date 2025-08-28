@@ -1,0 +1,144 @@
+<html>
+    <style>
+        body{
+            background-color: rgb(58, 53, 53);
+        }
+        .title{
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .text{
+            color:white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .a{
+            display:flex;
+            align-items: center;
+            gap:30px;
+        }
+        .one{
+            height:100px;
+        }
+        .btn1{
+            padding:10px;
+            background-color: white;
+            border:2px solid rgb(255, 255, 255);
+            border-radius: 10px;
+        }
+        .bulb{
+            height:20px;
+            width:20px;
+            border:2px solid rgb(0, 0, 0);
+            border-radius:30px;
+            background-color: silver;
+
+        }
+        .desc{
+            color:white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .bulbs{
+            height:20px;
+            width:20px;
+            border:2px solid rgb(0, 0, 0);
+            border-radius:30px;
+            background-color: gold;
+        }
+    </style>
+    <body>
+        <hr>
+        <div class="title">
+            <h1 class="text">HOW DO PLCs WORK? [what we learnt at NITK]</h1>
+        </div>
+        <hr>
+        <div class="a">
+            <h4 class="desc">N.O switch with output</h4>
+            <img src="c1.png" alt="" class="one">
+            <button class="btn1" id="btn1">PRESS</button>
+            <div class="bulb" id="b1"></div>
+        </div>
+        <hr>
+        <div class="a">
+            <h4 class="desc">N.C switch with output</h4>
+            <img src="c2.png" alt="PLC IMG" class="one">
+            <button class="btn1" id="btn2">PRESS</button>
+            <div class="bulbs" id="b2"></div>
+        </div>
+        <hr>
+        <div class="a">
+            <h4 class="desc">Time Pulse with output</h4>
+            <img src="c3.png" alt="" class="one">
+            <input type="number" id="inp1" placeholder="enter how many seconds">
+            <button class="btn1" id="btnalpha">PRESS</button>
+            <div class="bulb" id="b3"></div>
+        </div>
+        <hr>
+        <div class="a">
+            <h4 class="desc">Time ON with output</h4>
+            <img src="c4.png" alt="" class="one">
+            <input type="number" id="inp2" placeholder="time taken to turn on">
+            <button class="btn1" id="btnbeta">PRESS</button>
+            <div class="bulb" id="b4"></div>
+        </div>
+    </body>
+    <script>
+        document.getElementById('btn1').addEventListener('mousedown',()=>{
+            document.getElementById('b1').style.backgroundColor='gold'
+        })
+        document.getElementById('btn1').addEventListener('mouseup',()=>{
+            document.getElementById('b1').style.backgroundColor='silver'
+        })
+        document.getElementById('btn2').addEventListener('mousedown',()=>{
+            document.getElementById('b2').style.backgroundColor='silver'
+        })
+        document.getElementById('btn2').addEventListener('mouseup',()=>{
+            document.getElementById('b2').style.backgroundColor='gold'
+        })
+        let blinkInterval; 
+let isOn = false;
+
+document.getElementById("btnalpha").addEventListener("click", () => {
+  clearInterval(blinkInterval); // reset if already running
+
+  let time = document.getElementById("inp1").value;
+
+  if (!time || time <= 0) {
+    alert("Please enter a valid time in seconds!");
+    return;
+  }
+
+  blinkInterval = setInterval(() => {
+    let bulb = document.getElementById("b3");
+    if (isOn) {
+      bulb.style.background = "gray";  // OFF
+    } else {
+      bulb.style.background = "yellow"; // ON
+    }
+    isOn = !isOn;
+  }, time*1000);
+});
+
+function stopBlink() {
+  clearInterval(blinkInterval);
+  document.getElementById("b4").style.background = "gray"; // reset bulb
+}
+document.getElementById("btnbeta").addEventListener("click", () => {
+  let time = document.getElementById("inp2").value;
+
+  if (!time || time <= 0) {
+    alert("Please enter a valid time in seconds!");
+    return;
+  }
+
+  // reset bulb to OFF
+  document.getElementById("b4").style.background = "gray";
+
+  // after given delay, turn it ON
+  setTimeout(() => {
+    document.getElementById("b4").style.background = "yellow";
+  }, time*1000);
+});
+
+    </script>
+</html>
